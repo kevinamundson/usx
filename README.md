@@ -29,6 +29,36 @@ Hover a marker in the editor for its name and page treatment. **Features** in th
 
 The same highlighting, hover, and preview cover the USFM 3.0.1 marker inventory: numbered markers such as `q3` and `s4`, milestone pairs (`qt-s` / `qt-e`, `ts-s` / `ts-e`), table column spans (`th1-2`), and the marker parameters `lemma`, `strong`, `srcloc`, `gloss`, `link-href`, `link-title`, `link-id`, figure `alt` / `src` / `size` / `loc` / `copy` / `ref`, milestone `sid` / `eid` / `who`, note `caller` and `category`, and peripheral `id`. A style in the `\z` namespace and an attribute that starts with `x-` are recognized as project markup. The discretionary break `//` is the `optbreak` element. A no-break space from `~` stays in the text.
 
+## Install
+
+### Search in Visual Studio Code
+
+1. Open the Extensions view with Shift+Cmd+X on macOS, or Shift+Ctrl+X on Windows and Linux.
+2. Search for **USX**.
+3. Install the extension by Kevin Amundson.
+
+Visual Studio Code then offers later updates from the Marketplace.
+
+### Marketplace
+
+Open https://marketplace.visualstudio.com/items?itemName=KevinAmundson.usx and choose **Install**. That opens Visual Studio Code and installs the same extension.
+
+### Command line
+
+```bash
+code --install-extension kevinamundson.usx
+```
+
+### Download the .vsix
+
+The `.vsix` for each numbered version is attached to its [GitHub release](https://github.com/kevinamundson/usx/releases). In Visual Studio Code, open the Extensions view, open the **...** menu, and choose **Install from VSIX...**. You can also run:
+
+```bash
+code --install-extension usx-0.3.5.vsix
+```
+
+`npm install` does not install this extension into Visual Studio Code.
+
 ## Use
 
 Open this folder in VS Code and press F5. That launches an Extension Development Host with a sample USX file open.
@@ -40,7 +70,7 @@ In a USX file:
 - Move the cursor to scroll the preview to that verse. Click a verse in the preview to return to the source.
 - Choose **Paragraph** or **Verse** in the preview. Paragraph joins consecutive prose verses into one paragraph, up to the next heading or poetry line. Verse keeps each verse on its own line. The same choice is the setting `USX: Preview: By Verse`.
 
-Install a packaged copy with:
+Build a packaged copy from this source with:
 
 ```bash
 npm install
