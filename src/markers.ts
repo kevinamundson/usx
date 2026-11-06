@@ -8,7 +8,7 @@
  * char:wj = words of Jesus, ordinary text on the page and red in Features
  * note:f = footnotes
  * para:r = parallel-passage references
- * para:d = psalm superscriptions, in small caps
+ * para:d = superscription, small caps at the body size and color
  */
 
 export const TOKEN_TYPES = [
@@ -172,7 +172,7 @@ export const MARKERS: Record<string, MarkerInfo> = {
   s: paragraph("s", "heading", "Section heading", "Shown in italic as a section heading. s is level 1.", "heading", true, true),
   sr: paragraph("sr", "reference", "Section reference range", "Shown in italic under the section heading.", "reference", false, true),
   r: paragraph("r", "reference", "Parallel passage reference", "Shown in italic under the section heading.", "reference", false, true),
-  d: paragraph("d", "title", "Descriptive title", "Psalm superscription. Shown in small caps.", "reference", false, true),
+  d: paragraph("d", "title", "Superscription", "superscription; compositional matters in Psalms, introduction to appended records", "reference", false, true),
   sp: paragraph("sp", "heading", "Speaker", "Shown as a speaker label.", "speaker", false, true),
   sd: paragraph("sd", "heading", "Semantic division", "Vertical space that marks a division. sd is level 1.", "division", true, true),
 
@@ -192,7 +192,7 @@ export const MARKERS: Record<string, MarkerInfo> = {
   qa: paragraph("qa", "poetry", "Acrostic heading", "Shown as a small acrostic label.", "acrostic", false, true),
   qac: character("qac", "poetry", "Acrostic letter", "Shown as the acrostic letter."),
   qm: paragraph("qm", "poetry", "Embedded poetry", "Poetic line inside embedded text. qm is level 1.", "poetry", true, true),
-  qd: paragraph("qd", "poetry", "Hebrew note", "Shown in small caps after the verse it belongs to.", "hebrew", false, true),
+  qd: paragraph("qd", "poetry", "Postscription", "postscription; performative matters in Psalms, colophon to appended records", "hebrew", false, true),
 
   lh: paragraph("lh", "marker", "List header", "Introductory remark of a list.", "list-header", false, true),
   li: paragraph("li", "marker", "List entry", "List item. li is level 1.", "list", true),

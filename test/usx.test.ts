@@ -161,7 +161,7 @@ test("the preview stylesheet uses the system serif and Apple colors", () => {
   assert.match(css, /--system-red:\s*#ff3b30/);
   assert.match(css, /body\.features \.wj/);
   assert.match(css, /\.wj \{\s*color: inherit;/);
-  assert.match(css, /\.block\.d,\s*\.block\.qd \{[^}]*font-style:\s*normal;[^}]*font-variant:\s*small-caps;/);
+  assert.match(css, /\.block\.d,\s*\.block\.qd \{[^}]*font-style:\s*normal;[^}]*font-size:\s*17px;[^}]*color:\s*var\(--label\);[^}]*font-variant:\s*small-caps;[^}]*letter-spacing:\s*normal;/);
   assert.match(css, /\.block\.s,\s*\.block\[data-style\^="s1"\][\s\S]*?font-style:\s*italic;\s*font-weight:\s*400;/);
   assert.match(css, /\.block\.ms,\s*\.block\[data-style\^="ms1"\][\s\S]*?font-style:\s*italic;\s*font-weight:\s*700;/);
   assert.match(css, /body\.verses \.unit \{\s*display:\s*block;/);

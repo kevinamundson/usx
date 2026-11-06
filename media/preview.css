@@ -353,8 +353,7 @@ body:not(.verses) .passage .block.p + .block.p::before {
 }
 
 .r,
-.mr,
-.d {
+.mr {
   font-size: 15px;
   line-height: 1.4;
   color: var(--secondary-label);
@@ -366,9 +365,17 @@ body:not(.verses) .passage .block.p + .block.p::before {
   font-style: italic;
 }
 
+.block.d {
+  margin: 0.15rem 0 0.85rem;
+}
+
 .block.d,
 .block.qd {
   font-style: normal;
+  font-size: 17px;
+  line-height: 1.47;
+  font-weight: 400;
+  color: var(--label);
   font-variant: small-caps;
   letter-spacing: normal;
 }

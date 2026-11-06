@@ -18,7 +18,8 @@ The preview treats common styles this way:
 | `wj` | Character | Ordinary text. Features marks words of Jesus in red. |
 | `f`, `fr`, `ft`, `fq` | Note | Footnote, collected at the end of the chapter. Quotations inside a note are italic. |
 | `r`, `mr` | Paragraph | Italic passage reference. |
-| `d`, `qd` | Paragraph | Small caps. A psalm superscription, or a Hebrew note. |
+| `d` | Paragraph | Superscription. Small caps at the body size and color. |
+| `qd` | Paragraph | Postscription. Small caps at the body size and color. |
 | `q1`, `q2` | Paragraph | Poetry, indented one or two levels. |
 | `s1`, `s2` | Paragraph | Section headings, in italic. |
 | `ms1`, `ms2` | Paragraph | Major headings, in bold italic. |
@@ -44,7 +45,7 @@ Install a packaged copy with:
 ```bash
 npm install
 npx @vscode/vsce package
-code --install-extension usx-0.3.4.vsix
+code --install-extension usx-0.3.5.vsix
 ```
 
 ## Checks

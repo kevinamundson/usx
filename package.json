@@ -2,7 +2,7 @@
   "name": "usx",
   "displayName": "USX",
   "description": "Highlight USX scripture markup and preview it as an HTML page.",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "publisher": "kevinamundson",
   "icon": "media/icon.png",
   "license": "MIT",
