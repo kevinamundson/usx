@@ -60,6 +60,25 @@ test("page render keeps published styling and hides remarks", () => {
   assert.doesNotMatch(page.html, /status=draft/);
   assert.doesNotMatch(page.html, /secret remark/);
   assert.equal((page.html.match(/<sup class="verse"/g) || []).length, 2);
+  assert.match(page.html, /<span class="unit" data-sid="JHN 1:1"><sup class="verse"/);
+  assert.match(page.html, /<span class="unit" data-sid="JHN 1:2"><sup class="verse"/);
+});
+
+test("consecutive prose verses share one paragraph", () => {
+  const page = renderUsx(`<usx>
+    <chapter number="1" style="c" sid="GEN 1"/>
+    <para style="p"><verse number="1" style="v" sid="GEN 1:1"/>In the beginning</para>
+    <para style="p"><verse number="2" style="v" sid="GEN 1:2"/>the earth.</para>
+    <para style="s1">Next</para>
+    <para style="p"><verse number="3" style="v" sid="GEN 1:3"/>And God said.</para>
+  </usx>`);
+  assert.match(page.html, /<div class="passage"><p class="block p" data-style="p" data-sid="GEN 1:1">[\s\S]*<p class="block p" data-style="p" data-sid="GEN 1:2">[\s\S]*<\/div><h3 class="block s1"/);
+  assert.match(page.html, /<\/h3><div class="passage"><p class="block p" data-style="p" data-sid="GEN 1:3">/);
+});
+
+test("verses in one paragraph stay in separate units", () => {
+  const page = renderUsx(`<usx><para style="p"><verse number="1" style="v" sid="GEN 1:1"/>In the beginning <verse number="2" style="v" sid="GEN 1:2"/>the earth.</para></usx>`);
+  assert.match(page.html, /<span class="unit" data-sid="GEN 1:1"><sup class="verse"[^>]*>1<\/sup>In the beginning <\/span><span class="unit" data-sid="GEN 1:2">/);
 });
 
 test("psalm chapters use the Psalm kicker and descriptive titles stay small caps", () => {
@@ -143,7 +162,10 @@ test("the preview stylesheet uses the system serif and Apple colors", () => {
   assert.match(css, /body\.features \.wj/);
   assert.match(css, /\.wj \{\s*color: inherit;/);
   assert.match(css, /\.block\.d,\s*\.block\.qd \{[^}]*font-style:\s*normal;[^}]*font-variant:\s*small-caps;/);
-  assert.match(css, /\.block\.ms,\s*\.block\[data-style\^="ms1"\][\s\S]*font-style:\s*italic;\s*font-weight:\s*700;/);
+  assert.match(css, /\.block\.s,\s*\.block\[data-style\^="s1"\][\s\S]*?font-style:\s*italic;\s*font-weight:\s*400;/);
+  assert.match(css, /\.block\.ms,\s*\.block\[data-style\^="ms1"\][\s\S]*?font-style:\s*italic;\s*font-weight:\s*700;/);
+  assert.match(css, /body\.verses \.unit \{\s*display:\s*block;/);
+  assert.match(css, /body:not\(\.verses\) \.passage \.block\.p \{\s*display:\s*inline;/);
 });
 
 const USFM_MARKERS = `

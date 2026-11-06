@@ -90,6 +90,7 @@ body.vscode-high-contrast ::selection {
   z-index: 2;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   min-height: 52px;
   padding: 8px 16px;
@@ -98,6 +99,14 @@ body.vscode-high-contrast ::selection {
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+.tools {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
 .segment {
@@ -248,6 +257,21 @@ body.features .legend {
   margin: 0.85em 0;
 }
 
+/* The text stores each verse as its own paragraph. Paragraph view joins
+   consecutive prose verses until a heading, reference, or poetry line. */
+body:not(.verses) .passage {
+  margin: 0.85em 0;
+}
+
+body:not(.verses) .passage .block.p {
+  display: inline;
+  margin: 0;
+}
+
+body:not(.verses) .passage .block.p + .block.p::before {
+  content: " ";
+}
+
 .block.q1,
 .block.q2,
 .block.qs {
@@ -280,7 +304,6 @@ body.features .legend {
 .s1,
 .ms2 {
   font-size: 22px;
-  font-weight: 600;
   letter-spacing: -0.016em;
   line-height: 1.2;
   margin: 1.75rem 0 0.3rem;
@@ -296,7 +319,6 @@ body.features .legend {
 
 .s2 {
   font-size: 20px;
-  font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.25;
   margin: 1.35rem 0 0.25rem;
@@ -311,7 +333,11 @@ body.features .legend {
 .block[data-style^="s6"],
 .block[data-style^="s7"],
 .block[data-style^="s8"],
-.block[data-style^="s9"],
+.block[data-style^="s9"] {
+  font-style: italic;
+  font-weight: 400;
+}
+
 .block.ms,
 .block[data-style^="ms1"],
 .block[data-style^="ms2"],
@@ -387,6 +413,33 @@ body.features .add {
 
 .verse.is-current {
   color: var(--system-blue);
+}
+
+body.verses .passage .block.p {
+  display: block;
+  margin: 0.85em 0;
+}
+
+body.verses .block.q1:has(> .unit),
+body.verses .block.q2:has(> .unit) {
+  margin-top: 0.85em;
+}
+
+body.verses .unit {
+  display: block;
+}
+
+body.verses .unit + .unit {
+  margin-top: 0.55em;
+}
+
+body.verses .block.is-current {
+  background: transparent;
+}
+
+body.verses .unit.is-current {
+  background: var(--current-bg);
+  border-radius: 6px;
 }
 
 .block.is-current {

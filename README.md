@@ -20,7 +20,8 @@ The preview treats common styles this way:
 | `r`, `mr` | Paragraph | Italic passage reference. |
 | `d`, `qd` | Paragraph | Small caps. A psalm superscription, or a Hebrew note. |
 | `q1`, `q2` | Paragraph | Poetry, indented one or two levels. |
-| `s1`, `s2`, `ms1`, `ms2` | Paragraph | Section headings, in bold italic. |
+| `s1`, `s2` | Paragraph | Section headings, in italic. |
+| `ms1`, `ms2` | Paragraph | Major headings, in bold italic. |
 | `id`, `h`, `toc1`, `toc2`, `toc3`, `rem` | Book or paragraph | Kept in the file. Omitted from the page. |
 
 Hover a marker in the editor for its name and page treatment. **Features** in the preview marks words of Jesus in system red and underlines translator additions. **Page** is the published appearance.
@@ -36,13 +37,14 @@ In a USX file:
 - Press Shift+Cmd+V to open the preview beside the editor.
 - Or use the preview icon in the editor title.
 - Move the cursor to scroll the preview to that verse. Click a verse in the preview to return to the source.
+- Choose **Paragraph** or **Verse** in the preview. Paragraph joins consecutive prose verses into one paragraph, up to the next heading or poetry line. Verse keeps each verse on its own line. The same choice is the setting `USX: Preview: By Verse`.
 
 Install a packaged copy with:
 
 ```bash
 npm install
 npx @vscode/vsce package
-code --install-extension usx-0.3.0.vsix
+code --install-extension usx-0.3.4.vsix
 ```
 
 ## Checks

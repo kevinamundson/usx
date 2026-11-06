@@ -169,7 +169,7 @@ export const MARKERS: Record<string, MarkerInfo> = {
   mte: paragraph("mte", "title", "Major title ending", "Shown centered at the end of the book.", "title", true, true),
   ms: paragraph("ms", "heading", "Major section heading", "Shown in bold italic as a major heading. ms is level 1.", "heading", true, true),
   mr: paragraph("mr", "reference", "Major section reference", "Shown in italic under the major heading.", "reference", false, true),
-  s: paragraph("s", "heading", "Section heading", "Shown in bold italic as a section heading. s is level 1.", "heading", true, true),
+  s: paragraph("s", "heading", "Section heading", "Shown in italic as a section heading. s is level 1.", "heading", true, true),
   sr: paragraph("sr", "reference", "Section reference range", "Shown in italic under the section heading.", "reference", false, true),
   r: paragraph("r", "reference", "Parallel passage reference", "Shown in italic under the section heading.", "reference", false, true),
   d: paragraph("d", "title", "Descriptive title", "Psalm superscription. Shown in small caps.", "reference", false, true),
@@ -391,7 +391,7 @@ export function pageDescription(resolved: ResolvedMarker): string {
     return `Indented ${level} levels.`;
   }
   if (info.style === "s") {
-    return level <= 1 ? "Shown in bold italic as a section heading." : "Shown in bold italic as a smaller section heading.";
+    return level <= 1 ? "Shown in italic as a section heading." : "Shown in italic as a smaller section heading.";
   }
   if (info.style === "ms") {
     return level <= 1 ? "Shown in bold italic as a major heading." : "Shown in bold italic as a smaller major heading.";

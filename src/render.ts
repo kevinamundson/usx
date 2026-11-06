@@ -254,7 +254,7 @@ export function renderUsx(source: string): RenderResult {
   );
   if (frontFlow.blocks.length > 0 || frontNotes.length > 0) {
     const notes = frontNotes.length > 0 ? renderNotes(frontNotes, "Notes") : "";
-    parts.push(`<section class="front">${frontFlow.blocks.join("")}${notes}</section>`);
+    parts.push(`<section class="front">${joinBlocks(frontFlow.blocks)}${notes}</section>`);
   }
   for (const chapter of chapters) {
     const kicker = chapter.kicker || bookKicker || kickerName;
@@ -263,7 +263,7 @@ export function renderUsx(source: string): RenderResult {
     const alt = chapter.alt ? `<sup class="va">${escapeHtml(chapter.alt)}</sup>` : "";
     const notes = chapter.notes.length > 0 ? renderNotes(chapter.notes, "Footnotes") : "";
     parts.push(
-      `<section class="chapter" aria-label="${escapeHtml(label)}"><header class="chapter-head"${sidAttr}><p class="chapter-kicker">${escapeHtml(kicker)}</p><h2>${escapeHtml(chapter.displayNumber)}${alt}</h2></header>${chapter.descriptions.join("")}${chapter.flow.blocks.join("")}${notes}</section>`,
+      `<section class="chapter" aria-label="${escapeHtml(label)}"><header class="chapter-head"${sidAttr}><p class="chapter-kicker">${escapeHtml(kicker)}</p><h2>${escapeHtml(chapter.displayNumber)}${alt}</h2></header>${chapter.descriptions.join("")}${joinBlocks(chapter.flow.blocks)}${notes}</section>`,
     );
   }
   if (endnotes.length > 0) parts.push(renderNotes(endnotes, "Endnotes"));
@@ -362,10 +362,24 @@ function renderPara(element: ElementNode, ctx: RenderContext): string {
 
 function renderInline(nodes: Node[], ctx: RenderContext): string {
   let html = "";
+  let verseOpen = false;
+  const closeVerse = () => {
+    if (!verseOpen) return;
+    html += "</span>";
+    verseOpen = false;
+  };
   for (const node of nodes) {
+    if (node.kind === "element" && node.name === "verse" && node.attrs.number) {
+      closeVerse();
+      const sid = node.attrs.sid ? ` data-sid="${escapeHtml(node.attrs.sid)}"` : "";
+      html += `<span class="unit"${sid}>${renderVerse(node, ctx)}`;
+      verseOpen = true;
+      continue;
+    }
     if (node.kind === "text") html += escapeHtml(node.text);
     else html += renderChild(node, ctx);
   }
+  closeVerse();
   return html;
 }
 
@@ -560,5 +574,24 @@ function renderSidebarElement(element: ElementNode, ctx: RenderContext): string 
     }
   }
   closeSidebar(flow);
-  return flow.blocks.join("");
+  return joinBlocks(flow.blocks);
+}
+
+function joinBlocks(blocks: string[]): string {
+  let html = "";
+  let passage: string[] = [];
+  const flush = () => {
+    if (passage.length === 0) return;
+    html += `<div class="passage">${passage.join("")}</div>`;
+    passage = [];
+  };
+  for (const block of blocks) {
+    if (block.startsWith('<p class="block p" data-style="p"')) passage.push(block);
+    else {
+      flush();
+      html += block;
+    }
+  }
+  flush();
+  return html;
 }

@@ -5,6 +5,8 @@
   const refEl = document.getElementById("ref");
   const pageButton = document.getElementById("mode-page");
   const featuresButton = document.getElementById("mode-features");
+  const paragraphButton = document.getElementById("layout-paragraph");
+  const verseButton = document.getElementById("layout-verse");
   let currentRef = "";
 
   function cssEscape(value) {
@@ -16,6 +18,12 @@
     document.body.classList.toggle("features", on);
     pageButton.setAttribute("aria-pressed", on ? "false" : "true");
     featuresButton.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+
+  function setVerses(on) {
+    document.body.classList.toggle("verses", on);
+    paragraphButton.setAttribute("aria-pressed", on ? "false" : "true");
+    verseButton.setAttribute("aria-pressed", on ? "true" : "false");
   }
 
   function mark(ref) {
@@ -35,6 +43,7 @@
   window.addEventListener("message", (event) => {
     const message = event.data || {};
     if (message.type === "features") setFeatures(!!message.value);
+    if (message.type === "verses") setVerses(!!message.value);
     if (message.type === "render") {
       const y = document.documentElement.scrollTop;
       sheet.innerHTML = message.html || "";
@@ -66,6 +75,16 @@
   featuresButton.addEventListener("click", () => {
     setFeatures(true);
     vscode.postMessage({ type: "features", value: true });
+  });
+
+  paragraphButton.addEventListener("click", () => {
+    setVerses(false);
+    vscode.postMessage({ type: "verses", value: false });
+  });
+
+  verseButton.addEventListener("click", () => {
+    setVerses(true);
+    vscode.postMessage({ type: "verses", value: true });
   });
 
   sheet.addEventListener("click", (event) => {

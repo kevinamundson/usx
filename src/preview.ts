@@ -25,6 +25,7 @@ class UsxPreview {
   private readonly disposables: vscode.Disposable[] = [];
   private document: vscode.TextDocument;
   private features: boolean;
+  private byVerse: boolean;
   private ready = false;
   private timer: ReturnType<typeof setTimeout> | undefined;
   private disposed = false;
@@ -32,6 +33,7 @@ class UsxPreview {
   constructor(private readonly context: vscode.ExtensionContext, document: vscode.TextDocument, beside: boolean) {
     this.document = document;
     this.features = context.workspaceState.get("usx.features", false);
+    this.byVerse = vscode.workspace.getConfiguration("usx").get("preview.byVerse", false);
     this.panel = vscode.window.createWebviewPanel("usx.preview", "USX Preview", beside ? vscode.ViewColumn.Beside : vscode.ViewColumn.Active, {
       enableScripts: true,
       retainContextWhenHidden: true,
@@ -54,6 +56,11 @@ class UsxPreview {
       }),
       vscode.workspace.onDidCloseTextDocument((document) => {
         if (document.uri.toString() === this.document.uri.toString()) this.panel.dispose();
+      }),
+      vscode.workspace.onDidChangeConfiguration((event) => {
+        if (!event.affectsConfiguration("usx.preview.byVerse")) return;
+        this.byVerse = vscode.workspace.getConfiguration("usx").get("preview.byVerse", false);
+        void this.panel.webview.postMessage({ type: "verses", value: this.byVerse });
       }),
     );
   }
@@ -94,11 +101,17 @@ class UsxPreview {
 <title>USX Preview</title>
 <link rel="stylesheet" href="${css}">
 </head>
-<body>
+<body class="${this.byVerse ? "verses" : ""}">
 <header class="toolbar">
-  <div class="segment" role="group" aria-label="Preview appearance">
-    <button type="button" id="mode-page" aria-pressed="true">Page</button>
-    <button type="button" id="mode-features" aria-pressed="false">Features</button>
+  <div class="tools">
+    <div class="segment" role="group" aria-label="Preview appearance">
+      <button type="button" id="mode-page" aria-pressed="true">Page</button>
+      <button type="button" id="mode-features" aria-pressed="false">Features</button>
+    </div>
+    <div class="segment" role="group" aria-label="Scripture layout">
+      <button type="button" id="layout-paragraph" aria-pressed="${this.byVerse ? "false" : "true"}">Paragraph</button>
+      <button type="button" id="layout-verse" aria-pressed="${this.byVerse ? "true" : "false"}">Verse</button>
+    </div>
   </div>
   <div class="ref" id="ref">Scripture</div>
   <div class="mark"><img class="logo" src="${logo}" alt="USX"></div>
@@ -117,6 +130,7 @@ class UsxPreview {
     if (message.type === "ready") {
       this.ready = true;
       void this.panel.webview.postMessage({ type: "features", value: this.features });
+      void this.panel.webview.postMessage({ type: "verses", value: this.byVerse });
       this.publish();
       const editor = vscode.window.visibleTextEditors.find((item) => item.document.uri.toString() === this.document.uri.toString());
       this.postReference(editor?.selection.active);
@@ -125,6 +139,11 @@ class UsxPreview {
     if (message.type === "features") {
       this.features = !!message.value;
       void this.context.workspaceState.update("usx.features", this.features);
+      return;
+    }
+    if (message.type === "verses") {
+      this.byVerse = !!message.value;
+      void vscode.workspace.getConfiguration("usx").update("preview.byVerse", this.byVerse, vscode.ConfigurationTarget.Global);
       return;
     }
     if (message.type === "open" && message.ref) this.revealSource(message.ref);
