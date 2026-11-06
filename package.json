@@ -1,0 +1,183 @@
+{
+  "name": "usx",
+  "displayName": "USX",
+  "description": "Highlight USX scripture markup and preview it as an HTML page.",
+  "version": "0.3.1",
+  "publisher": "kevinamundson",
+  "icon": "media/icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinamundson/usx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kevinamundson/usx/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization"
+  ],
+  "keywords": [
+    "usx",
+    "usfm",
+    "scripture"
+  ],
+  "activationEvents": [
+    "onLanguage:usx"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "usx",
+        "aliases": [
+          "USX",
+          "Unified Scripture XML"
+        ],
+        "extensions": [
+          ".usx"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "usx",
+        "scopeName": "text.xml.usx",
+        "path": "./syntaxes/usx.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "usx.showPreviewToSide",
+        "title": "Open HTML Preview to the Side",
+        "category": "USX",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "usx.showPreview",
+        "title": "Open HTML Preview",
+        "category": "USX"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "usx.showPreviewToSide",
+        "key": "shift+cmd+v",
+        "mac": "shift+cmd+v",
+        "win": "shift+ctrl+v",
+        "linux": "shift+ctrl+v",
+        "when": "editorLangId == usx"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "usx.showPreviewToSide",
+          "when": "editorLangId == usx",
+          "group": "navigation"
+        }
+      ]
+    },
+    "semanticTokenTypes": [
+      { "id": "chapter", "description": "USX chapter marker" },
+      { "id": "verse", "description": "USX verse marker" },
+      { "id": "heading", "description": "USX section heading" },
+      { "id": "poetry", "description": "USX poetry line" },
+      { "id": "addition", "description": "Translator addition" },
+      { "id": "wordsOfJesus", "description": "Words of Jesus" },
+      { "id": "note", "description": "Footnote" },
+      { "id": "reference", "description": "Passage reference" },
+      { "id": "title", "description": "Title or superscription" },
+      { "id": "meta", "description": "Identification or remark" },
+      { "id": "marker", "description": "Other USX style" },
+      { "id": "attribute", "description": "USFM marker parameter" }
+    ],
+    "semanticTokenScopes": [
+      {
+        "language": "usx",
+        "scopes": {
+          "chapter": ["entity.name.function.chapter.usx"],
+          "verse": ["constant.numeric.verse.usx"],
+          "heading": ["entity.name.tag.heading.usx"],
+          "poetry": ["string.quoted.poetry.usx"],
+          "addition": ["markup.italic.addition.usx"],
+          "wordsOfJesus": ["keyword.control.words-of-jesus.usx"],
+          "note": ["comment.note.usx"],
+          "reference": ["support.type.reference.usx"],
+          "title": ["markup.bold.title.usx"],
+          "meta": ["comment.meta.usx"],
+          "marker": ["variable.parameter.marker.usx"],
+          "attribute": ["string.other.attribute.usx"]
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "editor.semanticHighlighting.enabled": true,
+      "editor.semanticTokenColorCustomizations": {
+        "enabled": true,
+        "rules": {
+          "chapter": { "foreground": "#BF5AF2", "fontStyle": "bold" },
+          "verse": { "foreground": "#0A84FF", "fontStyle": "bold" },
+          "heading": { "foreground": "#FF9F0A", "fontStyle": "bold" },
+          "poetry": { "foreground": "#64D2FF" },
+          "addition": { "foreground": "#30D158", "fontStyle": "italic" },
+          "wordsOfJesus": { "foreground": "#FF453A", "fontStyle": "bold" },
+          "note": { "foreground": "#FF9F0A", "fontStyle": "italic" },
+          "reference": { "foreground": "#5E5CE6" },
+          "title": { "foreground": "#BF5AF2", "fontStyle": "bold" },
+          "meta": { "foreground": "#98989D", "fontStyle": "italic" },
+          "marker": { "foreground": "#98989D" },
+          "attribute": { "foreground": "#FFD60A" }
+        },
+        "[Default Light Modern]": {
+          "rules": {
+            "chapter": { "foreground": "#8944AB", "fontStyle": "bold" },
+            "verse": { "foreground": "#007AFF", "fontStyle": "bold" },
+            "heading": { "foreground": "#C93400", "fontStyle": "bold" },
+            "poetry": { "foreground": "#0A7EA4" },
+            "addition": { "foreground": "#248A3D", "fontStyle": "italic" },
+            "wordsOfJesus": { "foreground": "#D70015", "fontStyle": "bold" },
+            "note": { "foreground": "#8E4B00", "fontStyle": "italic" },
+            "reference": { "foreground": "#5856D6" },
+            "title": { "foreground": "#8944AB", "fontStyle": "bold" },
+            "meta": { "foreground": "#6C6C70", "fontStyle": "italic" },
+            "marker": { "foreground": "#6C6C70" },
+            "attribute": { "foreground": "#9A5200" }
+          }
+        },
+        "[Default Light+]": {
+          "rules": {
+            "chapter": { "foreground": "#8944AB", "fontStyle": "bold" },
+            "verse": { "foreground": "#007AFF", "fontStyle": "bold" },
+            "heading": { "foreground": "#C93400", "fontStyle": "bold" },
+            "poetry": { "foreground": "#0A7EA4" },
+            "addition": { "foreground": "#248A3D", "fontStyle": "italic" },
+            "wordsOfJesus": { "foreground": "#D70015", "fontStyle": "bold" },
+            "note": { "foreground": "#8E4B00", "fontStyle": "italic" },
+            "reference": { "foreground": "#5856D6" },
+            "title": { "foreground": "#8944AB", "fontStyle": "bold" },
+            "meta": { "foreground": "#6C6C70", "fontStyle": "italic" },
+            "marker": { "foreground": "#6C6C70" },
+            "attribute": { "foreground": "#9A5200" }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "check": "tsc --noEmit",
+    "test": "node esbuild.js && node --test dist/usx.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.25.11",
+    "typescript": "^5.9.3"
+  }
+}

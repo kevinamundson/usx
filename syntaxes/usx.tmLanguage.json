@@ -1,0 +1,195 @@
+{
+  "name": "USX",
+  "scopeName": "text.xml.usx",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#cdata" },
+    { "include": "#prolog" },
+    { "include": "#tag" },
+    { "include": "#entity" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.block.xml",
+      "begin": "<!--",
+      "end": "-->"
+    },
+    "cdata": {
+      "name": "string.unquoted.cdata.xml",
+      "begin": "<!\\[CDATA\\[",
+      "end": "\\]\\]>"
+    },
+    "prolog": {
+      "name": "meta.tag.preprocessor.xml",
+      "begin": "<\\?",
+      "end": "\\?>"
+    },
+    "entity": {
+      "name": "constant.character.entity.xml",
+      "match": "&(#\\d+|#x[0-9A-Fa-f]+|[A-Za-z][A-Za-z0-9]+);"
+    },
+    "tag": {
+      "begin": "(</?)([A-Za-z_:][\\w.:-]*)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.xml" },
+        "2": { "name": "entity.name.tag.xml" }
+      },
+      "end": "(/?>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.xml" }
+      },
+      "patterns": [
+        { "include": "#style-chapter" },
+        { "include": "#style-verse" },
+        { "include": "#style-heading" },
+        { "include": "#style-poetry" },
+        { "include": "#style-addition" },
+        { "include": "#style-wj" },
+        { "include": "#style-note" },
+        { "include": "#style-reference" },
+        { "include": "#style-title" },
+        { "include": "#style-meta" },
+        { "include": "#style-marker" },
+        { "include": "#number-attr" },
+        { "include": "#code-attr" },
+        { "include": "#parameter-attr" },
+        { "include": "#attribute" }
+      ]
+    },
+    "style-chapter": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(c|ca|cl|cp|cd)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "entity.name.function.chapter.usx" }
+      }
+    },
+    "style-verse": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(v|va|vp|fv)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "constant.numeric.verse.usx" }
+      }
+    },
+    "style-heading": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(s\\d*|ms\\d*|is\\d*|iot|sp|sd\\d*)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "entity.name.tag.heading.usx" }
+      }
+    },
+    "style-poetry": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(q\\d*|qr|qc|qs|qa|qac|qm\\d*|qd|iq\\d*|qt\\d*-s|qt\\d*-e)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "string.quoted.poetry.usx" }
+      }
+    },
+    "style-addition": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(add|addpn|dc|fdc)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "markup.italic.addition.usx" }
+      }
+    },
+    "style-wj": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(wj)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "keyword.control.words-of-jesus.usx" }
+      }
+    },
+    "style-note": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(fe|ef|esbe|esb|fqa|fq|fk|fl|fw|fp|ft|fm|fr|f|ex|x|cat)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "comment.note.usx" }
+      }
+    },
+    "style-reference": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(mr|sr|rq|xta|xop|xot|xnt|xdc|xt|xo|xk|xq|ior|jmp|r)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "support.type.reference.usx" }
+      }
+    },
+    "style-title": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(mt\\d*|mte\\d*|imt\\d*|imte\\d*|periph|bk|nd|d)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "markup.bold.title.usx" }
+      }
+    },
+    "style-meta": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])(id|usfm|ide|sts|rem|h\\d*|toca\\d*|toc\\d*|ie|pb|ts\\d*-s|ts\\d*-e)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "comment.meta.usx" }
+      }
+    },
+    "style-marker": {
+      "match": "\\b(style)(\\s*=\\s*)([\"'])([^\"']+)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "variable.parameter.marker.usx" }
+      }
+    },
+    "code-attr": {
+      "match": "\\b(code)(\\s*=\\s*)([\"'])([^\"']*)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "comment.meta.usx" }
+      }
+    },
+    "parameter-attr": {
+      "match": "\\b(lemma|strong|srcloc|gloss|link-href|link-title|link-id|alt|src|size|loc|copy|ref|who|sid|eid|vid|altnumber|pubnumber|caller|category|closed|id|x-[A-Za-z0-9_-]+)(\\s*=\\s*)([\"'])([^\"']*)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "string.other.attribute.usx" }
+      }
+    },
+    "number-attr": {
+      "match": "\\b(number)(\\s*=\\s*)([\"'])([^\"']*)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "constant.numeric.usx" }
+      }
+    },
+    "attribute": {
+      "match": "\\b([A-Za-z_:][\\w:.-]*)(\\s*=\\s*)([\"'])([^\"']*)\\3",
+      "captures": {
+        "1": { "name": "entity.other.attribute-name.xml" },
+        "2": { "name": "punctuation.separator.key-value.xml" },
+        "3": { "name": "punctuation.definition.string.xml" },
+        "4": { "name": "string.quoted.double.xml" }
+      }
+    }
+  }
+}
