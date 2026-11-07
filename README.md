@@ -54,7 +54,7 @@ code --install-extension kevinamundson.usx
 The `.vsix` for each numbered version is attached to its [GitHub release](https://github.com/kevinamundson/usx/releases). In Visual Studio Code, open the Extensions view, open the **...** menu, and choose **Install from VSIX...**. You can also run:
 
 ```bash
-code --install-extension usx-0.3.5.vsix
+code --install-extension usx-0.3.6.vsix
 ```
 
 `npm install` does not install this extension into Visual Studio Code.
@@ -75,7 +75,7 @@ Build a packaged copy from this source with:
 ```bash
 npm install
 npx @vscode/vsce package
-code --install-extension usx-0.3.5.vsix
+code --install-extension usx-0.3.6.vsix
 ```
 
 ## Checks
